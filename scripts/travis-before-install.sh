@@ -54,6 +54,7 @@ then
 	echo "Adding external repositories for $DIST"
 	echo 'yes' | "$SUDO" add-apt-repository 'deb http://download.opensuse.org/repositories/home:/t-paul:/lib3mf/xUbuntu_14.04/ ./'
 
+	"$SUDO" apt-get update "$QUIET"
 	"$SUDO" apt-get install "$QUIET" $PACKAGES libharfbuzz-dev lib3mf-dev
 
 elif [[ "$DIST" == "precise" ]]
