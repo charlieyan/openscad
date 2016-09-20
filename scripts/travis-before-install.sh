@@ -40,8 +40,6 @@ PACKAGES='
 	imagemagick
 	libfontconfig-dev
 	libopencsg-dev
-	libharfbuzz-dev
-	lib3mf-dev
 '
 
 # Purge fglrx driver if that is installed by default
@@ -52,22 +50,30 @@ PACKAGES='
 
 if [[ "$DIST" == "trusty" ]]
 then
+
 	echo "Adding external repositories for $DIST"
 	echo 'yes' | "$SUDO" add-apt-repository 'deb http://download.opensuse.org/repositories/home:/t-paul:/lib3mf/xUbuntu_14.04/ ./'
 
+	"$SUDO" apt-get install "$QUIET" $PACKAGES libharfbuzz-dev lib3mf-dev
+
 elif [[ "$DIST" == "precise" ]]
 then
-	echo "Adding external repositories for $DIST"
-	echo 'yes' | "$SUDO" add-apt-repository ppa:chrysn/openscad
-	echo 'yes' | "$SUDO" add-apt-repository ppa:mapnik/nightly-trunk
+
+	echo 'yes' | sudo add-apt-repository ppa:chrysn/openscad
 	echo 'yes' | "$SUDO" add-apt-repository 'deb http://download.opensuse.org/repositories/home:/t-paul:/lib3mf/xUbuntu_12.04/ ./'
-
 	"$SUDO" apt-get update "$QUIET"
-	"$SUDO" apt-get install "$QUIET" $PACKAGES
+	"$SUDO" apt-get install "$QUIET" $PACKAGES lib3mf-dev
 
-	echo 'yes' | "$SUDO" add-apt-repository ppa:oibaf/graphics-drivers
+	echo 'yes' | sudo add-apt-repository ppa:mapnik/nightly-trunk
+	"$SUDO" apt-get update "$QUIET"
+	"$SUDO" apt-get install "$QUIET" libharfbuzz-dev
+
+	echo 'yes' | sudo add-apt-repository ppa:oibaf/graphics-drivers
 	"$SUDO" apt-get update "$QUIET"
 	"$SUDO" apt-get install "$QUIET" --install-recommends libgl1-mesa-dev-lts-quantal
+
 else
+
 	echo "WARNING: No install recipe for distribution '$DIST'"
+
 fi
