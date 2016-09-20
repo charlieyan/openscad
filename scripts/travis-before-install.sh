@@ -9,7 +9,7 @@ DIST="$1"
 SUDO=${SUDO:-sudo}
 WGET=${WGET:-wget}
 
-QUIET="-q"
+QUIET="-qq"
 
 echo "Running on:"
 echo
@@ -67,4 +67,5 @@ fi
 "$SUDO" apt-get update "$QUIET"
 "$SUDO" apt-get purge "$QUIET" fglrx
 
-"$SUDO" apt-get install "$QUIET" --install-recommends $PACKAGES $EXTRA_PACKAGES
+"$SUDO" apt-get install "$QUIET" $PACKAGES
+"$SUDO" apt-get install "$QUIET" --install-recommends $EXTRA_PACKAGES
